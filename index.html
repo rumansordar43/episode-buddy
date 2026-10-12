@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="Track anime and web series episodes and get reminders.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Episode Buddy</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="logo">▶</div><div><h1>Episode Buddy</h1><p>Your watchlist, never forgotten.</p></div></div>
+    <button id="notifyBtn" class="btn secondary">Enable alerts</button>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">YOUR PERSONAL TRACKER</p>
+        <h2>Pick up where<br><span>you left off.</span></h2>
+        <p class="hero-copy">Keep unfinished anime and web series in one place. Update your progress and get reminders when you check for new episodes.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orb">▶</div><span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">＋</span></div>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><span>Watching</span><strong id="watchingCount">0</strong></div>
+      <div class="stat"><span>Pending</span><strong id="pendingCount">0</strong></div>
+      <div class="stat"><span>Completed</span><strong id="completedCount">0</strong></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">BUILD YOUR LIST</p><h2>Add a series</h2></div></div>
+      <form id="addForm" class="add-form">
+        <label>Series title<input id="titleInput" required maxlength="100" placeholder="e.g. One Piece"></label>
+        <div class="form-row">
+          <label>Type<select id="typeInput"><option>Anime</option><option>Web Series</option><option>TV Series</option><option>Movie</option></select></label>
+          <label>Season<input id="seasonInput" type="number" min="1" value="1"></label>
+        </div>
+        <div class="form-row">
+          <label>Last episode watched<input id="episodeInput" type="number" min="0" value="0"></label>
+          <label>Total episodes (optional)<input id="totalInput" type="number" min="1" placeholder="Unknown"></label>
+        </div>
+        <label>Where to watch (optional)<input id="urlInput" type="url" placeholder="https://..."></label>
+        <button class="btn primary" type="submit">＋ Add to watchlist</button>
+      </form>
+    </section>
+
+    <section class="list-section">
+      <div class="section-heading list-head"><div><p class="eyebrow">YOUR LIBRARY</p><h2>My watchlist</h2></div><div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="watching">Watching</button><button class="filter" data-filter="pending">Pending</button><button class="filter" data-filter="completed">Done</button></div></div>
+      <div id="seriesList" class="series-list"></div>
+      <div id="emptyState" class="empty"><div class="empty-icon">▤</div><h3>Your watchlist is empty</h3><p>Add a series above so you can keep track of where you stopped.</p></div>
+    </section>
+
+    <section class="panel check-panel">
+      <div class="check-icon">↻</div><div class="check-text"><h3>Check for new episodes</h3><p>This first version stores your watchlist on this device. Automatic release checks need a working episode-data source and a small hosted backend; those aren't connected yet.</p><p id="lastCheck" class="muted">No check performed yet.</p></div>
+      <button id="checkBtn" class="btn secondary">Run demo check</button>
+    </section>
+    <p class="footnote">Privacy-first starter: your list is saved in this browser on this device. Export a backup regularly.</p>
+  </main>
+  <dialog id="editDialog">
+    <form id="editForm" method="dialog">
+      <div class="dialog-head"><h2>Update progress</h2><button class="icon-btn" value="cancel" aria-label="Close">×</button></div>
+      <input id="editId" type="hidden">
+      <label>Series title<input id="editTitle" required maxlength="100"></label>
+      <div class="form-row"><label>Season<input id="editSeason" type="number" min="1" value="1"></label><label>Episode watched<input id="editEpisode" type="number" min="0" value="0"></label></div>
+      <label>Total episodes (optional)<input id="editTotal" type="number" min="1"></label>
+      <label>Watch link<input id="editUrl" type="url" placeholder="https://..."></label>
+      <label>Status<select id="editStatus"><option value="watching">Watching</option><option value="pending">Waiting for next episode</option><option value="completed">Completed</option></select></label>
+      <button class="btn primary full" value="save">Save changes</button>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
